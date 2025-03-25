@@ -6,8 +6,8 @@
 }
 
 body {
-    background-color: #f5f5f5;
-    color: #333;
+    background-color: #121212;
+    color: #e0e0e0;
 }
 
 .container {
@@ -22,18 +22,19 @@ header {
 }
 
 h1 {
-    color: #4a4a9c;
+    color: #bb86fc;
     margin-bottom: 15px;
 }
 
 .stats {
     display: flex;
     justify-content: space-around;
-    background-color: #e0e0ff;
+    background-color: #1f1f1f;
     padding: 10px;
     border-radius: 8px;
     font-size: 18px;
     font-weight: bold;
+    border: 1px solid #333;
 }
 
 /* New layout styles */
@@ -68,16 +69,16 @@ h1 {
 
 .spacebar-hint {
     text-align: center;
-    color: #666;
+    color: #aaa;
     font-size: 14px;
 }
 
 kbd {
-    background-color: #f1f1f1;
-    border: 1px solid #ccc;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
     border-radius: 3px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-    color: #333;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    color: #e0e0e0;
     display: inline-block;
     font-family: monospace;
     font-size: 12px;
@@ -88,7 +89,7 @@ kbd {
 .click-area {
     width: 200px;
     height: 200px;
-    background-color: #5d5dff;
+    background-color: #6200ee;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -96,11 +97,11 @@ kbd {
     cursor: pointer;
     user-select: none;
     transition: transform 0.1s, background-color 0.3s;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
 }
 
 .click-area.disabled {
-    background-color: #9d9dcc;
+    background-color: #4b4b63;
     cursor: not-allowed;
     box-shadow: none;
 }
@@ -117,27 +118,29 @@ kbd {
 
 .math-problems {
     width: 100%;
-    background-color: white;
+    background-color: #1f1f1f;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    border: 1px solid #333;
 }
 
 .math-problems h2 {
     text-align: center;
     margin-bottom: 10px;
+    color: #bb86fc;
 }
 
 .instruction {
     text-align: center;
-    color: #ff5722;
+    color: #ff7597;
     font-weight: bold;
     margin-bottom: 20px;
     font-size: 16px;
 }
 
 .problem-container {
-    background-color: #f9f9f9;
+    background-color: #2a2a2a;
     padding: 15px;
     border-radius: 6px;
     margin-bottom: 15px;
@@ -149,15 +152,15 @@ kbd {
 }
 
 .problem-container.easy {
-    border-left-color: #4caf50; /* Green */
+    border-left-color: #69f0ae; /* Green */
 }
 
 .problem-container.medium {
-    border-left-color: #2196f3; /* Blue */
+    border-left-color: #03dac6; /* Teal */
 }
 
 .problem-container.hard {
-    border-left-color: #ff5722; /* Orange */
+    border-left-color: #ff7597; /* Pink */
 }
 
 .difficulty-label {
@@ -167,26 +170,27 @@ kbd {
 }
 
 .problem-container.easy .difficulty-label {
-    color: #4caf50;
+    color: #69f0ae;
 }
 
 .problem-container.medium .difficulty-label {
-    color: #2196f3;
+    color: #03dac6;
 }
 
 .problem-container.hard .difficulty-label {
-    color: #ff5722;
+    color: #ff7597;
 }
 
 .problem-text {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
+    color: #e0e0e0;
 }
 
 .problem-reward {
     font-size: 14px;
-    color: #666;
+    color: #aaa;
     margin-bottom: 10px;
 }
 
@@ -200,13 +204,26 @@ input[type="number"] {
     font-size: 16px;
     width: 100px;
     text-align: center;
-    border: 2px solid #ccc;
+    border: 2px solid #444;
     border-radius: 4px;
+    transition: border-color 0.3s, background-color 0.3s;
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+input[type="number"]:focus {
+    border-color: #bb86fc;
+    outline: none;
+}
+
+input[type="number"].incorrect {
+    border-color: #cf6679;
+    background-color: rgba(207, 102, 121, 0.2);
 }
 
 .submit-answer {
     padding: 8px 16px;
-    background-color: #4a4a9c;
+    background-color: #6200ee;
     color: white;
     border: none;
     border-radius: 4px;
@@ -215,18 +232,19 @@ input[type="number"] {
 }
 
 .submit-answer:hover {
-    background-color: #3a3a7c;
+    background-color: #7c41dd;
 }
 
 .upgrades {
-    background-color: white;
+    background-color: #1f1f1f;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    border: 1px solid #333;
 }
 
 h2 {
-    color: #4a4a9c;
+    color: #bb86fc;
     margin-bottom: 15px;
     text-align: center;
 }
@@ -236,7 +254,7 @@ h2 {
     justify-content: space-between;
     align-items: center;
     padding: 15px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #333;
 }
 
 .upgrade-item:last-child {
@@ -245,17 +263,17 @@ h2 {
 
 .upgrade-info h3 {
     margin-bottom: 5px;
-    color: #333;
+    color: #e0e0e0;
 }
 
 .upgrade-info p {
-    color: #666;
+    color: #aaa;
     font-size: 14px;
 }
 
 .buy-button {
     padding: 8px 16px;
-    background-color: #5d5dff;
+    background-color: #6200ee;
     color: white;
     border: none;
     border-radius: 4px;
@@ -263,11 +281,11 @@ h2 {
 }
 
 .buy-button:hover {
-    background-color: #4a4a9c;
+    background-color: #7c41dd;
 }
 
 .buy-button:disabled {
-    background-color: #cccccc;
+    background-color: #4b4b63;
     cursor: not-allowed;
 }
 

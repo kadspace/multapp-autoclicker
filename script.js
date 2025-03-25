@@ -12,7 +12,6 @@ let clickingEnabled = false; // Start with clicking disabled
 let clickCounter = 0;
 let clicksPerSecond = 0;
 let clickTrackingInterval = null;
-let isInputFocused = false; // Track if an input is focused
 
 // Reward values
 const problemRewards = {
@@ -64,7 +63,7 @@ function setupEventListeners() {
     // Click area
     clickArea.addEventListener('click', handleClick);
     
-    // Submit buttons
+    // Submit buttons - keep these as a fallback
     submitButtons.forEach(button => {
         button.addEventListener('click', () => {
             const difficulty = button.dataset.difficulty;
@@ -72,30 +71,47 @@ function setupEventListeners() {
         });
     });
     
-    // Input fields
+    // Input fields - check answer on input
     Object.keys(problemElements).forEach(difficulty => {
-        // Enter key for submitting answers
+        // Auto-check answer as user types
+        problemElements[difficulty].input.addEventListener('input', () => {
+            // Only check if there's a value
+            if (problemElements[difficulty].input.value.trim() !== '') {
+                checkAnswer(difficulty);
+            }
+        });
+        
+        // Also keep Enter key functionality as a fallback
         problemElements[difficulty].input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 checkAnswer(difficulty);
             }
         });
-        
-        // Track focus state for all input fields
-        problemElements[difficulty].input.addEventListener('focus', () => {
-            isInputFocused = true;
-        });
-        
-        problemElements[difficulty].input.addEventListener('blur', () => {
-            isInputFocused = false;
-        });
     });
     
     // Global keydown event for spacebar
     document.addEventListener('keydown', (e) => {
-        // If spacebar is pressed and no input is focused, trigger click
-        if (e.code === 'Space' && !isInputFocused) {
-            e.preventDefault(); // Prevent page scroll
+        // If spacebar is pressed, trigger a click
+        if (e.code === 'Space') {
+            // Always prevent default behavior of spacebar (page scrolling, etc.)
+            e.preventDefault();
+            
+            // If spacebar is pressed in an input, don't add the space character
+            if (document.activeElement.tagName === 'INPUT') {
+                // Get current input value and cursor position
+                const input = document.activeElement;
+                const cursorPosition = input.selectionStart;
+                const value = input.value;
+                
+                // Restore the value without the space
+                // This effectively cancels the default spacebar behavior
+                setTimeout(() => {
+                    input.value = value;
+                    input.setSelectionRange(cursorPosition, cursorPosition);
+                }, 0);
+            }
+            
+            // Trigger the click
             handleClick();
             
             // Add visual feedback for the click area
@@ -202,7 +218,7 @@ function checkAnswer(difficulty) {
     const userAnswer = parseInt(problemElements[difficulty].input.value);
     
     if (isNaN(userAnswer)) {
-        showNotification('Please enter a valid number', 'error');
+        // No notification for empty or invalid inputs
         return;
     }
     
@@ -222,8 +238,15 @@ function checkAnswer(difficulty) {
         
         generateMathProblem(difficulty);
     } else {
-        // Wrong answer
-        showNotification('Incorrect answer. Try again!', 'error');
+        // Wrong answer - don't show any notification
+        // Just highlight the input field temporarily to indicate it's wrong
+        const inputField = problemElements[difficulty].input;
+        inputField.classList.add('incorrect');
+        
+        // Remove the incorrect class after a short delay
+        setTimeout(() => {
+            inputField.classList.remove('incorrect');
+        }, 500);
     }
 }
 
@@ -246,11 +269,12 @@ function showNotification(message, type) {
                 z-index: 1000;
             }
             .notification {
-                background-color: white;
+                background-color: #2a2a2a;
+                color: #e0e0e0;
                 padding: 12px 20px;
                 margin-bottom: 10px;
                 border-radius: 4px;
-                box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
                 transform: translateX(120%);
                 transition: transform 0.3s ease-out;
                 display: flex;
@@ -260,10 +284,10 @@ function showNotification(message, type) {
                 transform: translateX(0);
             }
             .notification.success {
-                border-left: 4px solid #4caf50;
+                border-left: 4px solid #69f0ae;
             }
             .notification.error {
-                border-left: 4px solid #f44336;
+                border-left: 4px solid #cf6679;
             }
             .click-area.active {
                 transform: scale(0.95);

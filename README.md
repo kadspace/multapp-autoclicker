@@ -5,7 +5,7 @@ A web-based auto clicker game focused on multiplication skills. Earn money by cl
 ## Features
 
 - Click to earn money (after solving at least one math problem)
-- Use spacebar as a shortcut for clicking
+- Use spacebar as a shortcut for clicking (works everywhere, even when typing in answer fields)
 - Solve multiplication problems of varying difficulty for different rewards
 - Track your clicks per second
 - Purchase upgrades to increase your click power
@@ -20,6 +20,7 @@ A web-based auto clicker game focused on multiplication skills. Earn money by cl
    - **Easy Problems**: Simple multiplication with numbers 1-5 for $5 reward
    - **Medium Problems**: Multiplication with numbers 5-9 for $15 reward
    - **Hard Problems**: Multiplication with double-digit numbers for $30 reward
+   - Answers are checked automatically as you type
 4. Use your earnings to purchase upgrades:
    - **Upgrade Click Power**: Increases the amount of money you earn per click
    - **Auto Clicker**: Automatically clicks for you every second
@@ -27,8 +28,9 @@ A web-based auto clicker game focused on multiplication skills. Earn money by cl
 ## Controls
 
 - **Mouse Click** on the blue circle to earn money
-- **Spacebar** to click (works anywhere except when typing in answer fields)
-- **Enter** key to submit answers in the input fields
+- **Spacebar** to click (always registers as a click, even when typing in answer fields)
+- **Number Keys** to enter answers (checks automatically as you type)
+- **Enter** key as a fallback to submit answers
 
 ## Getting Started
 
@@ -56,4 +58,4 @@ No external libraries or frameworks required. This project is created with pure 
 - Add sound effects and animations
 - Save game progress locally
 - Add achievements system
-- Add timed challenges for better rewards 
+- Add timed challenges for better rewards
