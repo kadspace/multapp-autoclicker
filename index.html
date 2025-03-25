@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MultiMath Auto Clicker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MultiMath Auto Clicker</h1>
+            <div class="stats">
+                <div class="money">Money: $<span id="money">0</span></div>
+                <div class="click-power">Click Power: <span id="click-power">1</span></div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="game-area">
+                <div class="click-area" id="click-area">
+                    <div class="click-text">CLICK</div>
+                </div>
+                
+                <div class="math-problem" id="math-problem">
+                    <div class="problem-text" id="problem-text">Solve: ?</div>
+                    <input type="number" id="answer-input" placeholder="Answer">
+                    <button id="submit-answer">Submit</button>
+                </div>
+            </div>
+            
+            <div class="upgrades">
+                <h2>Upgrades</h2>
+                <div class="upgrade-item" id="upgrade-click">
+                    <div class="upgrade-info">
+                        <h3>Upgrade Click Power</h3>
+                        <p>Increase your click power by 1</p>
+                    </div>
+                    <button class="buy-button" data-upgrade="click">Cost: $<span id="click-upgrade-cost">10</span></button>
+                </div>
+                
+                <div class="upgrade-item" id="upgrade-auto">
+                    <div class="upgrade-info">
+                        <h3>Auto Clicker</h3>
+                        <p>Clicks automatically every second</p>
+                    </div>
+                    <button class="buy-button" data-upgrade="auto">Cost: $<span id="auto-upgrade-cost">50</span></button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
