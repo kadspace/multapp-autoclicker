@@ -11,7 +11,7 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -36,12 +36,53 @@ h1 {
     font-weight: bold;
 }
 
-.game-area {
+/* New layout styles */
+.game-layout {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.left-column {
+    flex: 7;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.right-column {
+    flex: 3;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.click-area-container {
+    position: sticky;
+    top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    margin-bottom: 30px;
+    gap: 15px;
+}
+
+.spacebar-hint {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+}
+
+kbd {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    color: #333;
+    display: inline-block;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1;
+    padding: 3px 5px;
 }
 
 .click-area {
@@ -54,11 +95,17 @@ h1 {
     align-items: center;
     cursor: pointer;
     user-select: none;
-    transition: transform 0.1s;
+    transition: transform 0.1s, background-color 0.3s;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-.click-area:active {
+.click-area.disabled {
+    background-color: #9d9dcc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.click-area:active:not(.disabled) {
     transform: scale(0.95);
 }
 
@@ -68,33 +115,96 @@ h1 {
     font-weight: bold;
 }
 
-.math-problem {
+.math-problems {
+    width: 100%;
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.math-problems h2 {
     text-align: center;
-    width: 100%;
-    max-width: 400px;
+    margin-bottom: 10px;
+}
+
+.instruction {
+    text-align: center;
+    color: #ff5722;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.problem-container {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    border-left: 5px solid;
+}
+
+.problem-container:last-child {
+    margin-bottom: 0;
+}
+
+.problem-container.easy {
+    border-left-color: #4caf50; /* Green */
+}
+
+.problem-container.medium {
+    border-left-color: #2196f3; /* Blue */
+}
+
+.problem-container.hard {
+    border-left-color: #ff5722; /* Orange */
+}
+
+.difficulty-label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.problem-container.easy .difficulty-label {
+    color: #4caf50;
+}
+
+.problem-container.medium .difficulty-label {
+    color: #2196f3;
+}
+
+.problem-container.hard .difficulty-label {
+    color: #ff5722;
 }
 
 .problem-text {
-    font-size: 24px;
-    margin-bottom: 15px;
+    font-size: 18px;
     font-weight: bold;
+    margin-bottom: 10px;
 }
 
-#answer-input {
+.problem-reward {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.problem-input {
+    display: flex;
+    gap: 10px;
+}
+
+input[type="number"] {
     padding: 8px;
-    font-size: 18px;
+    font-size: 16px;
     width: 100px;
     text-align: center;
-    margin-right: 10px;
     border: 2px solid #ccc;
     border-radius: 4px;
 }
 
-#submit-answer {
+.submit-answer {
     padding: 8px 16px;
     background-color: #4a4a9c;
     color: white;
@@ -104,7 +214,7 @@ h1 {
     font-size: 16px;
 }
 
-#submit-answer:hover {
+.submit-answer:hover {
     background-color: #3a3a7c;
 }
 
@@ -159,4 +269,20 @@ h2 {
 .buy-button:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .game-layout {
+        flex-direction: column;
+    }
+    
+    .right-column {
+        order: -1;
+    }
+    
+    .click-area-container {
+        position: relative;
+        margin-bottom: 20px;
+    }
 } 

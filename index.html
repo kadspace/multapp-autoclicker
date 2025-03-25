@@ -13,38 +13,77 @@
             <div class="stats">
                 <div class="money">Money: $<span id="money">0</span></div>
                 <div class="click-power">Click Power: <span id="click-power">1</span></div>
+                <div class="cps">Clicks/s: <span id="clicks-per-second">0</span></div>
             </div>
         </header>
         
         <main>
-            <div class="game-area">
-                <div class="click-area" id="click-area">
-                    <div class="click-text">CLICK</div>
+            <div class="game-layout">
+                <div class="left-column">
+                    <div class="math-problems">
+                        <h2>Multiplication Problems</h2>
+                        <p class="instruction">Solve at least one problem to unlock clicking!</p>
+                        
+                        <div class="problem-container easy" id="easy-problem">
+                            <div class="difficulty-label">Easy (1-5)</div>
+                            <div class="problem-text" id="easy-problem-text">Solve: ?</div>
+                            <div class="problem-reward">Reward: $<span id="easy-reward">5</span></div>
+                            <div class="problem-input">
+                                <input type="number" id="easy-answer-input" placeholder="Answer">
+                                <button class="submit-answer" data-difficulty="easy">Submit</button>
+                            </div>
+                        </div>
+                        
+                        <div class="problem-container medium" id="medium-problem">
+                            <div class="difficulty-label">Medium (5-9)</div>
+                            <div class="problem-text" id="medium-problem-text">Solve: ?</div>
+                            <div class="problem-reward">Reward: $<span id="medium-reward">15</span></div>
+                            <div class="problem-input">
+                                <input type="number" id="medium-answer-input" placeholder="Answer">
+                                <button class="submit-answer" data-difficulty="medium">Submit</button>
+                            </div>
+                        </div>
+                        
+                        <div class="problem-container hard" id="hard-problem">
+                            <div class="difficulty-label">Hard (10-99)</div>
+                            <div class="problem-text" id="hard-problem-text">Solve: ?</div>
+                            <div class="problem-reward">Reward: $<span id="hard-reward">30</span></div>
+                            <div class="problem-input">
+                                <input type="number" id="hard-answer-input" placeholder="Answer">
+                                <button class="submit-answer" data-difficulty="hard">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="upgrades">
+                        <h2>Upgrades</h2>
+                        <div class="upgrade-item" id="upgrade-click">
+                            <div class="upgrade-info">
+                                <h3>Upgrade Click Power</h3>
+                                <p>Increase your click power by 1</p>
+                            </div>
+                            <button class="buy-button" data-upgrade="click">Cost: $<span id="click-upgrade-cost">10</span></button>
+                        </div>
+                        
+                        <div class="upgrade-item" id="upgrade-auto">
+                            <div class="upgrade-info">
+                                <h3>Auto Clicker</h3>
+                                <p>Clicks automatically every second</p>
+                            </div>
+                            <button class="buy-button" data-upgrade="auto">Cost: $<span id="auto-upgrade-cost">50</span></button>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="math-problem" id="math-problem">
-                    <div class="problem-text" id="problem-text">Solve: ?</div>
-                    <input type="number" id="answer-input" placeholder="Answer">
-                    <button id="submit-answer">Submit</button>
-                </div>
-            </div>
-            
-            <div class="upgrades">
-                <h2>Upgrades</h2>
-                <div class="upgrade-item" id="upgrade-click">
-                    <div class="upgrade-info">
-                        <h3>Upgrade Click Power</h3>
-                        <p>Increase your click power by 1</p>
+                <div class="right-column">
+                    <div class="click-area-container">
+                        <div class="click-area disabled" id="click-area">
+                            <div class="click-text">LOCKED</div>
+                        </div>
+                        <div class="spacebar-hint">
+                            Press <kbd>Spacebar</kbd> to click
+                        </div>
                     </div>
-                    <button class="buy-button" data-upgrade="click">Cost: $<span id="click-upgrade-cost">10</span></button>
-                </div>
-                
-                <div class="upgrade-item" id="upgrade-auto">
-                    <div class="upgrade-info">
-                        <h3>Auto Clicker</h3>
-                        <p>Clicks automatically every second</p>
-                    </div>
-                    <button class="buy-button" data-upgrade="auto">Cost: $<span id="auto-upgrade-cost">50</span></button>
                 </div>
             </div>
         </main>
