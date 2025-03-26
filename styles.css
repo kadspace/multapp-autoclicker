@@ -6,8 +6,8 @@
 }
 
 body {
-    background-color: #121212;
-    color: #e0e0e0;
+    background-color: #f5f5f5;
+    color: #2c3e50;
 }
 
 .container {
@@ -29,12 +29,12 @@ h1 {
 .stats {
     display: flex;
     justify-content: space-around;
-    background-color: #1f1f1f;
-    padding: 10px;
-    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 12px;
     font-size: 18px;
     font-weight: bold;
-    border: 1px solid #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* New layout styles */
@@ -69,60 +69,90 @@ h1 {
 
 .spacebar-hint {
     text-align: center;
-    color: #aaa;
+    color: #7f8c8d;
     font-size: 14px;
+    margin-top: 10px;
 }
 
 kbd {
-    background-color: #2a2a2a;
-    border: 1px solid #444;
-    border-radius: 3px;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
-    color: #e0e0e0;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+    color: #2c3e50;
     display: inline-block;
     font-family: monospace;
     font-size: 12px;
     line-height: 1;
-    padding: 3px 5px;
+    padding: 4px 6px;
 }
 
 .click-area {
     width: 200px;
     height: 200px;
-    background-color: #6200ee;
+    background: linear-gradient(135deg, #3498db, #2980b9);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     user-select: none;
-    transition: transform 0.1s, background-color 0.3s;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.click-area::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: transparent;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.click-area.multiplier-active::after {
+    border-color: #2ecc71;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.2);
+        opacity: 0;
+    }
 }
 
 .click-area.disabled {
-    background-color: #4b4b63;
+    background: linear-gradient(135deg, #bdc3c7, #95a5a6);
     cursor: not-allowed;
     box-shadow: none;
 }
 
 .click-area:active:not(.disabled) {
     transform: scale(0.95);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .click-text {
     color: white;
     font-size: 24px;
     font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .math-problems {
     width: 100%;
-    background-color: #1f1f1f;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    border: 1px solid #333;
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .math-problems h2 {
@@ -133,65 +163,66 @@ kbd {
 
 .instruction {
     text-align: center;
-    color: #ff7597;
+    color: #e74c3c;
     font-weight: bold;
     margin-bottom: 20px;
     font-size: 16px;
 }
 
 .problem-container {
-    background-color: #2a2a2a;
-    padding: 15px;
-    border-radius: 6px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
     margin-bottom: 15px;
     border-left: 5px solid;
+    transition: transform 0.2s;
 }
 
-.problem-container:last-child {
-    margin-bottom: 0;
+.problem-container:hover {
+    transform: translateX(5px);
 }
 
 .problem-container.easy {
-    border-left-color: #69f0ae; /* Green */
+    border-left-color: #2ecc71;
 }
 
 .problem-container.medium {
-    border-left-color: #03dac6; /* Teal */
+    border-left-color: #3498db;
 }
 
 .problem-container.hard {
-    border-left-color: #ff7597; /* Pink */
+    border-left-color: #e74c3c;
 }
 
 .difficulty-label {
     font-weight: bold;
     font-size: 14px;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 .problem-container.easy .difficulty-label {
-    color: #69f0ae;
+    color: #27ae60;
 }
 
 .problem-container.medium .difficulty-label {
-    color: #03dac6;
+    color: #2980b9;
 }
 
 .problem-container.hard .difficulty-label {
-    color: #ff7597;
+    color: #c0392b;
 }
 
 .problem-text {
     font-size: 18px;
     font-weight: bold;
-    margin-bottom: 10px;
-    color: #e0e0e0;
+    margin-bottom: 12px;
+    color: #2c3e50;
 }
 
 .problem-reward {
     font-size: 14px;
-    color: #aaa;
-    margin-bottom: 10px;
+    color: #7f8c8d;
+    margin-bottom: 12px;
 }
 
 .problem-input {
@@ -200,47 +231,49 @@ kbd {
 }
 
 input[type="number"] {
-    padding: 8px;
+    padding: 10px;
     font-size: 16px;
     width: 100px;
     text-align: center;
-    border: 2px solid #444;
-    border-radius: 4px;
-    transition: border-color 0.3s, background-color 0.3s;
-    background-color: #333;
-    color: #e0e0e0;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    transition: all 0.3s;
+    background-color: #ffffff;
+    color: #2c3e50;
 }
 
 input[type="number"]:focus {
-    border-color: #bb86fc;
+    border-color: #3498db;
     outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
 input[type="number"].incorrect {
-    border-color: #cf6679;
-    background-color: rgba(207, 102, 121, 0.2);
+    border-color: #e74c3c;
+    background-color: rgba(231, 76, 60, 0.1);
 }
 
 .submit-answer {
-    padding: 8px 16px;
-    background-color: #6200ee;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
+    transition: all 0.3s;
 }
 
 .submit-answer:hover {
-    background-color: #7c41dd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .upgrades {
-    background-color: #1f1f1f;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    border: 1px solid #333;
+    background-color: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
@@ -250,42 +283,46 @@ h2 {
 }
 
 .upgrade-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    background-color: #f8f9fa;
     padding: 15px;
-    border-bottom: 1px solid #333;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    transition: transform 0.2s;
 }
 
-.upgrade-item:last-child {
-    border-bottom: none;
+.upgrade-item:hover {
+    transform: translateY(-2px);
 }
 
 .upgrade-info h3 {
+    color: #2c3e50;
     margin-bottom: 5px;
-    color: #e0e0e0;
 }
 
 .upgrade-info p {
-    color: #aaa;
+    color: #7f8c8d;
     font-size: 14px;
+    margin-bottom: 10px;
 }
 
 .buy-button {
-    padding: 8px 16px;
-    background-color: #6200ee;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
+    transition: all 0.3s;
 }
 
-.buy-button:hover {
-    background-color: #7c41dd;
+.buy-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .buy-button:disabled {
-    background-color: #4b4b63;
+    background: linear-gradient(135deg, #bdc3c7, #95a5a6);
     cursor: not-allowed;
 }
 
@@ -300,7 +337,7 @@ h2 {
     }
     
     .click-area-container {
-        position: relative;
+        position: static;
         margin-bottom: 20px;
     }
 } 

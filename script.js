@@ -8,17 +8,21 @@ let currentMathProblems = {
     medium: null,
     hard: null
 };
-let clickingEnabled = false; // Start with clicking disabled
 let clickCounter = 0;
 let clicksPerSecond = 0;
 let clickTrackingInterval = null;
+let activeMultiplier = 1;
+let multiplierTimeout = null;
 
-// Reward values
-const problemRewards = {
-    easy: 5,
-    medium: 15,
-    hard: 30
+// Reward values (these are now multipliers)
+const problemMultipliers = {
+    easy: 2,
+    medium: 3,
+    hard: 5
 };
+
+// Multiplier duration in milliseconds
+const MULTIPLIER_DURATION = 5000;
 
 // Upgrade costs
 const clickUpgradeBaseCost = 10;
@@ -55,7 +59,6 @@ function initGame() {
     generateAllMathProblems();
     setupEventListeners();
     startClickTracking();
-    updateClickAreaState();
 }
 
 // Setup event listeners
@@ -115,12 +118,10 @@ function setupEventListeners() {
             handleClick();
             
             // Add visual feedback for the click area
-            if (clickingEnabled) {
-                clickArea.classList.add('active');
-                setTimeout(() => {
-                    clickArea.classList.remove('active');
-                }, 100);
-            }
+            clickArea.classList.add('active');
+            setTimeout(() => {
+                clickArea.classList.remove('active');
+            }, 100);
         }
     });
     
@@ -132,23 +133,9 @@ function setupEventListeners() {
 
 // Handle clicking the main click area
 function handleClick() {
-    if (clickingEnabled) {
-        updateMoney(money + clickPower);
-        clickCounter++;
-    } else {
-        showNotification('Solve at least one math problem to unlock clicking!', 'error');
-    }
-}
-
-// Update the click area appearance based on whether clicking is enabled
-function updateClickAreaState() {
-    if (clickingEnabled) {
-        clickArea.classList.remove('disabled');
-        clickArea.querySelector('.click-text').textContent = 'CLICK';
-    } else {
-        clickArea.classList.add('disabled');
-        clickArea.querySelector('.click-text').textContent = 'LOCKED';
-    }
+    const totalClickValue = clickPower * activeMultiplier;
+    updateMoney(money + totalClickValue);
+    clickCounter++;
 }
 
 // Start tracking clicks per second
@@ -213,37 +200,49 @@ function generateMathProblem(difficulty) {
     problemElements[difficulty].input.value = '';
 }
 
+// Apply multiplier for correct answers
+function applyMultiplier(multiplier) {
+    // Clear any existing multiplier timeout
+    if (multiplierTimeout) {
+        clearTimeout(multiplierTimeout);
+    }
+    
+    // Apply the new multiplier
+    activeMultiplier = multiplier;
+    
+    // Update visual feedback
+    clickArea.classList.add('multiplier-active');
+    clickArea.style.transform = 'scale(1.1)';
+    clickArea.style.boxShadow = '0 0 20px rgba(46, 204, 113, 0.5)';
+    
+    // Set timeout to reset multiplier
+    multiplierTimeout = setTimeout(() => {
+        activeMultiplier = 1;
+        clickArea.classList.remove('multiplier-active');
+        clickArea.style.transform = '';
+        clickArea.style.boxShadow = '';
+    }, MULTIPLIER_DURATION);
+}
+
 // Check the submitted answer for a specific difficulty
 function checkAnswer(difficulty) {
     const userAnswer = parseInt(problemElements[difficulty].input.value);
     
     if (isNaN(userAnswer)) {
-        // No notification for empty or invalid inputs
         return;
     }
     
     if (userAnswer === currentMathProblems[difficulty].answer) {
-        // Correct answer
-        const reward = problemRewards[difficulty];
-        updateMoney(money + reward);
+        // Apply the multiplier for correct answer
+        applyMultiplier(problemMultipliers[difficulty]);
         
-        // Enable clicking if it wasn't already enabled
-        if (!clickingEnabled) {
-            clickingEnabled = true;
-            updateClickAreaState();
-            showNotification('Clicking unlocked! You can now click to earn money!', 'success');
-        } else {
-            showNotification(`Correct! You earned $${reward}!`, 'success');
-        }
-        
+        showNotification(`Correct! ${problemMultipliers[difficulty]}x multiplier active for 5 seconds!`, 'success');
         generateMathProblem(difficulty);
     } else {
-        // Wrong answer - don't show any notification
-        // Just highlight the input field temporarily to indicate it's wrong
+        // Wrong answer - visual feedback only
         const inputField = problemElements[difficulty].input;
         inputField.classList.add('incorrect');
         
-        // Remove the incorrect class after a short delay
         setTimeout(() => {
             inputField.classList.remove('incorrect');
         }, 500);
@@ -313,7 +312,7 @@ function showNotification(message, type) {
     }, 3000);
 }
 
-// Handle buying upgrades
+// Handle auto clicker upgrades
 function handleUpgrade(e) {
     const upgradeType = e.target.dataset.upgrade;
     
@@ -338,9 +337,7 @@ function handleUpgrade(e) {
             }
             
             autoClickerIntervalId = setInterval(() => {
-                if (clickingEnabled) { // Only auto-click if clicking is enabled
-                    updateMoney(money + (autoClickerLevel * clickPower));
-                }
+                updateMoney(money + (autoClickerLevel * clickPower * activeMultiplier));
             }, 1000);
         }
     }

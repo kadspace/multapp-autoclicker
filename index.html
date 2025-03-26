@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MultiMath Auto Clicker</title>
+    <title>Math Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>MultiMath Auto Clicker</h1>
             <div class="stats">
                 <div class="money">Money: $<span id="money">0</span></div>
                 <div class="click-power">Click Power: <span id="click-power">1</span></div>
@@ -21,9 +20,6 @@
             <div class="game-layout">
                 <div class="left-column">
                     <div class="math-problems">
-                        <h2>Multiplication Problems</h2>
-                        <p class="instruction">Solve at least one problem to unlock clicking!</p>
-                        
                         <div class="problem-container easy" id="easy-problem">
                             <div class="difficulty-label">Easy (1-5)</div>
                             <div class="problem-text" id="easy-problem-text">Solve: ?</div>
@@ -77,8 +73,8 @@
                 
                 <div class="right-column">
                     <div class="click-area-container">
-                        <div class="click-area disabled" id="click-area">
-                            <div class="click-text">LOCKED</div>
+                        <div class="click-area" id="click-area">
+                            <div class="click-text">CLICK!</div>
                         </div>
                         <div class="spacebar-hint">
                             Press <kbd>Spacebar</kbd> to click
