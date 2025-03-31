@@ -13,8 +13,9 @@ let clicksPerSecond = 0;
 let clickTrackingInterval = null;
 let activeMultiplier = 1;
 let multiplierTimeout = null;
+let hasClickedOnce = false;
 
-// Reward values (these are now multipliers)
+// Reward values (these are now multipliers to add)
 const problemMultipliers = {
     easy: 2,
     medium: 3,
@@ -31,10 +32,11 @@ const autoClickerBaseCost = 50;
 // DOM elements
 const moneyDisplay = document.getElementById('money');
 const clickPowerDisplay = document.getElementById('click-power');
-const clickArea = document.getElementById('click-area');
 const submitButtons = document.querySelectorAll('.submit-answer');
 const buyButtons = document.querySelectorAll('.buy-button');
 const cpsDisplay = document.getElementById('clicks-per-second');
+const multiplierDisplay = document.getElementById('current-multiplier');
+const spacebarInstruction = document.getElementById('spacebar-instruction');
 const inputFields = document.querySelectorAll('input');
 
 // Problem elements by difficulty
@@ -59,13 +61,11 @@ function initGame() {
     generateAllMathProblems();
     setupEventListeners();
     startClickTracking();
+    updateMultiplierDisplay();
 }
 
 // Setup event listeners
 function setupEventListeners() {
-    // Click area
-    clickArea.addEventListener('click', handleClick);
-    
     // Submit buttons - keep these as a fallback
     submitButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -117,11 +117,11 @@ function setupEventListeners() {
             // Trigger the click
             handleClick();
             
-            // Add visual feedback for the click area
-            clickArea.classList.add('active');
-            setTimeout(() => {
-                clickArea.classList.remove('active');
-            }, 100);
+            // Hide the spacebar instruction after first press
+            if (!hasClickedOnce) {
+                hideSpacebarInstruction();
+                hasClickedOnce = true;
+            }
         }
     });
     
@@ -131,11 +131,23 @@ function setupEventListeners() {
     });
 }
 
-// Handle clicking the main click area
+// Hide the spacebar instruction
+function hideSpacebarInstruction() {
+    spacebarInstruction.classList.add('hidden');
+}
+
+// Handle clicking (spacebar press)
 function handleClick() {
     const totalClickValue = clickPower * activeMultiplier;
     updateMoney(money + totalClickValue);
     clickCounter++;
+    
+    // Add visual feedback to the multiplier
+    const multiplierElement = document.querySelector('.multiplier');
+    multiplierElement.classList.add('active');
+    setTimeout(() => {
+        multiplierElement.classList.remove('active');
+    }, 100);
 }
 
 // Start tracking clicks per second
@@ -207,21 +219,22 @@ function applyMultiplier(multiplier) {
         clearTimeout(multiplierTimeout);
     }
     
-    // Apply the new multiplier
-    activeMultiplier = multiplier;
+    // Add the new multiplier to the current one
+    activeMultiplier += multiplier;
     
-    // Update visual feedback
-    clickArea.classList.add('multiplier-active');
-    clickArea.style.transform = 'scale(1.1)';
-    clickArea.style.boxShadow = '0 0 20px rgba(46, 204, 113, 0.5)';
+    // Update the display
+    updateMultiplierDisplay();
     
     // Set timeout to reset multiplier
     multiplierTimeout = setTimeout(() => {
         activeMultiplier = 1;
-        clickArea.classList.remove('multiplier-active');
-        clickArea.style.transform = '';
-        clickArea.style.boxShadow = '';
+        updateMultiplierDisplay();
     }, MULTIPLIER_DURATION);
+}
+
+// Update multiplier display
+function updateMultiplierDisplay() {
+    multiplierDisplay.textContent = activeMultiplier;
 }
 
 // Check the submitted answer for a specific difficulty
@@ -236,7 +249,7 @@ function checkAnswer(difficulty) {
         // Apply the multiplier for correct answer
         applyMultiplier(problemMultipliers[difficulty]);
         
-        showNotification(`Correct! ${problemMultipliers[difficulty]}x multiplier active for 5 seconds!`, 'success');
+        // Generate a new problem
         generateMathProblem(difficulty);
     } else {
         // Wrong answer - visual feedback only
@@ -247,69 +260,6 @@ function checkAnswer(difficulty) {
             inputField.classList.remove('incorrect');
         }, 500);
     }
-}
-
-// Show a temporary notification instead of an alert
-function showNotification(message, type) {
-    // Check if a notification container exists, if not, create one
-    let notificationContainer = document.querySelector('.notification-container');
-    if (!notificationContainer) {
-        notificationContainer = document.createElement('div');
-        notificationContainer.className = 'notification-container';
-        document.body.appendChild(notificationContainer);
-        
-        // Add styles
-        const style = document.createElement('style');
-        style.textContent = `
-            .notification-container {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 1000;
-            }
-            .notification {
-                background-color: #2a2a2a;
-                color: #e0e0e0;
-                padding: 12px 20px;
-                margin-bottom: 10px;
-                border-radius: 4px;
-                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
-                transform: translateX(120%);
-                transition: transform 0.3s ease-out;
-                display: flex;
-                align-items: center;
-            }
-            .notification.show {
-                transform: translateX(0);
-            }
-            .notification.success {
-                border-left: 4px solid #69f0ae;
-            }
-            .notification.error {
-                border-left: 4px solid #cf6679;
-            }
-            .click-area.active {
-                transform: scale(0.95);
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.textContent = message;
-    
-    notificationContainer.appendChild(notification);
-    
-    // Show notification with animation
-    setTimeout(() => notification.classList.add('show'), 10);
-    
-    // Remove after 3 seconds
-    setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => notification.remove(), 300);
-    }, 3000);
 }
 
 // Handle auto clicker upgrades

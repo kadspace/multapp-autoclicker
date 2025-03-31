@@ -13,17 +13,22 @@
                 <div class="money">Money: $<span id="money">0</span></div>
                 <div class="click-power">Click Power: <span id="click-power">1</span></div>
                 <div class="cps">Clicks/s: <span id="clicks-per-second">0</span></div>
+                <div class="multiplier">Multiplier: <span id="current-multiplier">1</span>x</div>
             </div>
         </header>
         
+        <div id="spacebar-instruction" class="key-instruction">
+            Press <kbd>Spacebar</kbd> to earn money
+        </div>
+        
         <main>
             <div class="game-layout">
-                <div class="left-column">
+                <div class="math-section">
                     <div class="math-problems">
                         <div class="problem-container easy" id="easy-problem">
                             <div class="difficulty-label">Easy (1-5)</div>
                             <div class="problem-text" id="easy-problem-text">Solve: ?</div>
-                            <div class="problem-reward">Reward: $<span id="easy-reward">5</span></div>
+                            <div class="problem-reward">Multiplier: +<span id="easy-reward">2</span>x</div>
                             <div class="problem-input">
                                 <input type="number" id="easy-answer-input">
                                 <button class="submit-answer" data-difficulty="easy">Submit</button>
@@ -33,7 +38,7 @@
                         <div class="problem-container medium" id="medium-problem">
                             <div class="difficulty-label">Medium (5-9)</div>
                             <div class="problem-text" id="medium-problem-text">Solve: ?</div>
-                            <div class="problem-reward">Reward: $<span id="medium-reward">15</span></div>
+                            <div class="problem-reward">Multiplier: +<span id="medium-reward">3</span>x</div>
                             <div class="problem-input">
                                 <input type="number" id="medium-answer-input">
                                 <button class="submit-answer" data-difficulty="medium">Submit</button>
@@ -43,14 +48,16 @@
                         <div class="problem-container hard" id="hard-problem">
                             <div class="difficulty-label">Hard (10-99)</div>
                             <div class="problem-text" id="hard-problem-text">Solve: ?</div>
-                            <div class="problem-reward">Reward: $<span id="hard-reward">30</span></div>
+                            <div class="problem-reward">Multiplier: +<span id="hard-reward">5</span>x</div>
                             <div class="problem-input">
                                 <input type="number" id="hard-answer-input">
                                 <button class="submit-answer" data-difficulty="hard">Submit</button>
                             </div>
                         </div>
                     </div>
-                    
+                </div>
+                
+                <div class="upgrades-section">
                     <div class="upgrades">
                         <h2>Upgrades</h2>
                         <div class="upgrade-item" id="upgrade-click">
@@ -67,17 +74,6 @@
                                 <p>Clicks automatically every second</p>
                             </div>
                             <button class="buy-button" data-upgrade="auto">Cost: $<span id="auto-upgrade-cost">50</span></button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="right-column">
-                    <div class="click-area-container">
-                        <div class="click-area" id="click-area">
-                            <div class="click-text">CLICK!</div>
-                        </div>
-                        <div class="spacebar-hint">
-                            Press <kbd>Spacebar</kbd> to click
                         </div>
                     </div>
                 </div>
